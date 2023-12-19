@@ -11,8 +11,9 @@ function calculateMaxProfit(units) {
     for (let i = 4; i <= units; i++) {
         for (let buildType in buildTime) {
             if (i >= buildTime[buildType]) {
-                const earnings = data[i - buildTime[buildType]].earnings + ((units - i) * earningsPerUnit[buildType]);
-                if (earnings >= data[i].earnings) {
+                const currentEarning = (units - i) * earningsPerUnit[buildType];
+                const earnings = data[i - buildTime[buildType]].earnings + currentEarning;
+                if (currentEarning && earnings > data[i].earnings) {
                     data[i].earnings = earnings;
                     data[i].combinations = {
                         ...data[i - buildTime[buildType]].combinations,
@@ -52,7 +53,7 @@ function displayResults() {
 
     // Display combinations
     if (parseInt(inputUnits, 10) <= 4) {
-        outputContainer.innerHTML += `<h3>Solution : T:${result.combinations[0].T} P:${result.combinations[0].P} C:${result.combinations[0].C}</h3>`
+        outputContainer.innerHTML += ""
     } else {
         result.combinations.forEach((combination, index) => {
             outputContainer.innerHTML += `<h3>Solution ${index + 1}: T:${combination.T} P:${combination.P} C:${combination.C}</h3>`
